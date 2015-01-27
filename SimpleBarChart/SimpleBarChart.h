@@ -120,15 +120,18 @@ typedef enum
 // Control the Y-axis Labels
 @property (nonatomic, assign) BOOL hasYLabels;
 @property (nonatomic, strong) UIFont *yLabelFont;
+@property (nonatomic) double yLabelFontSize;
 @property (nonatomic, strong) UIColor *yLabelColor;
 
 // Control the X-axis Labels
 @property (nonatomic, strong) UIFont *xLabelFont;
+@property (nonatomic) double xLabelFontSize;
 @property (nonatomic, strong) UIColor *xLabelColor;
 @property (nonatomic, assign) SimpleBarChartXLabelType xLabelType;
 
 // Control the text near the bar
 @property (nonatomic, strong) UIFont *barTextFont;
+@property (nonatomic) double barTextFontSize;
 @property (nonatomic, strong) UIColor *barTextColor;
 @property (nonatomic, assign) SimpleBarChartBarTextType barTextType;
 

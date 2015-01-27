@@ -51,12 +51,15 @@ dataSource	= _dataSource;
 	self.chartBorderColor	= [UIColor blackColor];
 	self.gridColor			= [UIColor grayColor];
 	self.hasYLabels			= YES;
-	self.yLabelFont			= [UIFont fontWithName:@"Helvetica" size:12.0];
+    self.xLabelFontSize = 12.0;
+    self.yLabelFontSize = 12.0;
+    self.barTextFontSize = 12.0;
+	//self.yLabelFont			= [UIFont fontWithName:@"Helvetica" size:12.0];
 	self.yLabelColor		= [UIColor blackColor];
-	self.xLabelFont			= [UIFont fontWithName:@"Helvetica" size:12.0];
+	//self.xLabelFont			= [UIFont fontWithName:@"Helvetica" size:12.0];
 	self.xLabelColor		= [UIColor blackColor];
 	self.xLabelType			= SimpleBarChartXLabelTypeVerticle;
-	self.barTextFont		= [UIFont fontWithName:@"Helvetica" size:12.0];
+	//self.barTextFont		= [UIFont fontWithName:@"Helvetica" size:12.0];
 	self.barTextColor		= [UIColor whiteColor];
 	self.barTextType		= SimpleBarChartBarTextTypeTop;
 
@@ -133,10 +136,10 @@ dataSource	= _dataSource;
 				_xLabelRotation = 45.0;
 				break;
 		}
-		
+		NSDictionary *xLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:self.xLabelFontSize]};
 		for (NSString *label in _barLabels)
 		{
-			CGSize labelSize = [label sizeWithFont:self.xLabelFont];
+			CGSize labelSize = [label sizeWithAttributes:xLabelFontAttributes];
 			CGFloat labelHeightWithAngle = sin(DEGREES_TO_RADIANS(_xLabelRotation)) * labelSize.width;
 
 			if (labelSize.height > labelHeightWithAngle)
@@ -150,8 +153,9 @@ dataSource	= _dataSource;
 		}
 
 		// Begin Drawing
-		// Set Frames		
-		CGSize yLabelSize		= self.hasYLabels ? [[NSString stringWithFormat:@"%i", _topValue] sizeWithFont:self.yLabelFont] : CGSizeZero;
+		// Set Frames
+        NSDictionary *yLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:self.yLabelFontSize]};
+		CGSize yLabelSize		= self.hasYLabels ? [[NSString stringWithFormat:@"%li", (long)_topValue] sizeWithAttributes:yLabelFontAttributes] : CGSizeZero;
 		_yLabelView.frame		= CGRectMake(0.0,
 											 0.0,
 											 self.hasYLabels ? yLabelSize.width + 5.0 : 0.0,
@@ -398,8 +402,8 @@ dataSource	= _dataSource;
 
 	CGFloat gridUnit			= _gridLayer.bounds.size.height / _topValue;
 	CGFloat gridSeperation		= gridUnit * (CGFloat)self.incrementValue;
-
-	CGSize yLabelSize			= [[NSString stringWithFormat:@"%i", _topValue] sizeWithFont:self.yLabelFont];
+    NSDictionary *yLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:self.xLabelFontSize]};
+	CGSize yLabelSize			= [[NSString stringWithFormat:@"%li", (long)_topValue] sizeWithAttributes:yLabelFontAttributes];
 	CGFloat yPos				= 0.0;
 	NSInteger maxVal			= _topValue;
 	while (yPos < _gridLayer.bounds.size.height)
@@ -414,7 +418,7 @@ dataSource	= _dataSource;
 		yLabel.textColor		= self.yLabelColor;
 		yLabel.textAlignment	= NSTextAlignmentRight;
 		yLabel.center			= CGPointMake(yLabel.center.x, yPos);
-		yLabel.text				= [NSString stringWithFormat:@"%i", maxVal];
+		yLabel.text				= [NSString stringWithFormat:@"%li", (long)maxVal];
 
 		[_yLabelView addSubview:yLabel];
 
@@ -439,7 +443,8 @@ dataSource	= _dataSource;
 	for (NSInteger i = 0; i < _numberOfBars; i++)
 	{
 		NSString *xLabelText	= [_barLabels objectAtIndex:i];
-		CGSize xLabelSize		= [xLabelText sizeWithFont:self.xLabelFont];
+        NSDictionary *xLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:self.xLabelFontSize]};
+		CGSize xLabelSize		= [xLabelText sizeWithAttributes:xLabelFontAttributes];
 		CGRect xLabelFrame		= CGRectMake(0.0,
 											 0.0,
 											 xLabelSize.width,
@@ -493,8 +498,9 @@ dataSource	= _dataSource;
 
 	for (NSInteger i = 0; i < _numberOfBars; i++)
 	{
+        NSDictionary *barTextFontAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:self.barTextFontSize]};
 		NSString *barLabelText	= [_barTexts objectAtIndex:i];
-		CGSize barTextSize		= [barLabelText sizeWithFont:self.barTextFont];
+		CGSize barTextSize		= [barLabelText sizeWithAttributes:barTextFontAttributes];
 		CGRect barTextFrame		= CGRectMake(0.0,
 											 0.0,
 											 barTextSize.width,
